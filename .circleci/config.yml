@@ -1,0 +1,35 @@
+version: 2.1
+
+executors:
+  default:
+    working_directory: ~/hix_postgresql
+    docker:
+      - image: circleci/ruby:2.7.2
+        environment:
+          BUNDLE_JOBS: 3
+          BUNDLE_PATH: vendor/bundle
+          BUNDLE_RETRY: 3
+          BUNDLER_VERSION: 2.0.1
+          RAILS_ENV: test
+          DB_HOST: 127.0.0.1
+          PG_HOST: 127.0.0.1
+
+jobs:
+  build:
+    executor: default
+    steps:
+      - checkout
+      - run: echo "hello world"
+
+  setup:
+    executor: default
+    steps:
+      - checkout
+      - run: bundle install
+
+workflows:
+  version: 2
+  integration:
+    jobs:
+      - build
+      - setup
