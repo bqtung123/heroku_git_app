@@ -32,4 +32,6 @@ workflows:
   integration:
     jobs:
       - build
-      - setup
+      - setup:
+          requires:
+            - build
